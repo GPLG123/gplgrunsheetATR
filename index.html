@@ -148,23 +148,19 @@ function loadTable(date = filterDate.value){
 
     dailyData[date][runNum].forEach(entry=>{
       const row = tbody.insertRow();
-      row.insertCell().textContent = entry.date;
-      row.insertCell().textContent = entry.vehicle;
-      row.insertCell().textContent = entry.run;
-      row.insertCell().textContent = entry.location;
-      row.insertCell().textContent = entry.arrival;
-      row.insertCell().textContent = entry.booking;
-      row.insertCell().textContent = entry.departure;
-      row.insertCell().textContent = entry.specification;
-      row.insertCell().textContent = entry.qty;
-      row.insertCell().textContent = entry.comment;
+      
+      Object.values(entry).forEach(value=>{
+        const cell = row.insertCell();
+        cell.textContent = value;
+        cell.contentEditable = false; // ⚠️ Make table cells non-editable
+      });
 
       const deleteCell = row.insertCell();
       const btn = document.createElement("button");
       btn.textContent = "❌";
 
       btn.onclick = function(){
-        if(confirm("⚠️ Ești sigur că vrei să ștergi această intrare?")) {
+        if(confirm("⚠️ Atenție! Ștergerea acestui rând este permanentă. Ești sigur că vrei să ștergi această intrare?")) {
           dailyData[entry.date][entry.run] =
             dailyData[entry.date][entry.run].filter(e => e !== entry);
 
